@@ -1,7 +1,7 @@
-import { validateSchema } from "middleware/schema-middleware";
+import { validateSchema } from "../middleware/schema-middleware";
 import { createPhone } from "../controllers/phone-controller";
 import { Router } from "express";
-import phoneSchema from "schemas";
+import phoneSchema from "../schemas";
 
 const phoneRouter = Router();
 
