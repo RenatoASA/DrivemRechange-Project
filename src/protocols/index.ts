@@ -1,8 +1,14 @@
     export type ContactData = {
-        cpf: number,
-        phoneNumber: number[],
-        operator: string,
+        id:number,
+        cpf: string,
         name: string,
-        description: string   
+        operator: string,
+        description: string,
+        phoneNumber: string[]
     };
 
+    export type phonesNumbers ={
+        id:number,
+        phones_id:number,
+        number:string
+    }

@@ -5,7 +5,7 @@ import { ContactData } from 'protocols';
 
 const phoneSchema =  Joi.object<ContactData> ({
     cpf: Joi.number().required(),
-    phoneNumber: Joi.array().items(Joi.number()).required().min(1).max(3),
+    phoneNumber: Joi.array().items(Joi.number()).required(),
     operator: Joi.string().required(),
     name: Joi.string().required(),
     description: Joi.string().required()
