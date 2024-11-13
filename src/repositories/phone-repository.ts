@@ -10,7 +10,7 @@ export async function insertPhone(contactData:ContactData){
 }
 
 export async function createPhone(contactData:ContactData){
-    const {cpf, phoneNumber, operator, name, description } = contactData;
+    const {cpf, operator, name, description } = contactData;
     const result = await db.query<ContactData>(`INSERT INTO phones 
         ( cpf, name, operator, description)
           VALUES ($1,$2, $3,$4) RETURNING *`,
@@ -33,8 +33,21 @@ async function getPhonesByCpf(cpf: string) {
     return cpfs;
 }
 
+async function getPhonesCompare(phoneNumber:string) {
+
+    const numbers = await db.query(`SELECT * FROM phonesNumber   where phoneNumber = $1;`, [phoneNumber])
+    return numbers;
+}
+
+async function getPhonesListByCpf(document:string){
+    const phones = await db.query(`SELECT phoneNumber FROM phonesNumber JOIN phones ON phonesNumber.phone_id = phones.id where phones.cpf = $1;`, [document]);
+    return phones;
+}
+
 const phoneRepository = {
-    getPhonesByCpf
+    getPhonesByCpf,
+    getPhonesListByCpf,
+    getPhonesCompare
 }
 
 export default phoneRepository;

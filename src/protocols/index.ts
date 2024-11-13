@@ -4,7 +4,16 @@
         name: string,
         operator: string,
         description: string,
-        phoneNumber: string[]
+        phoneNumber: string[],
+        carrier: Carrier,
+        recharges: RechargeData[]
+    };
+
+    export type RechargeData = {
+        id: number,
+        phoneNumber_rc: string,
+        recharge: number,
+        balance: number
     };
 
     export type phonesNumbers ={
@@ -12,3 +21,12 @@
         phones_id:number,
         number:string
     }
+
+    export type Carrier ={
+        id: number,
+        phone_id: number,
+        name: string,
+        code: number
+    }
+
+

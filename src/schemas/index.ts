@@ -1,7 +1,7 @@
 
 
 import Joi, { ObjectSchema } from 'joi';
-import { ContactData } from 'protocols';
+import { ContactData, RechargeData } from 'protocols';
 
 const phoneSchema =  Joi.object<ContactData> ({
     cpf: Joi.number().required(),
@@ -11,7 +11,17 @@ const phoneSchema =  Joi.object<ContactData> ({
     description: Joi.string().required()
 });
 
-export default phoneSchema;
+const rechargeSchema =  Joi.object<RechargeData> ({
+    id: Joi.number().required(),
+    recharge: Joi.number().required()
+});
+
+const Schema={
+    phoneSchema,
+    rechargeSchema
+}
+
+export default Schema;
 
 // import joi, { ObjectSchema} from 'joi';
 // import { ContactData } from 'protocols';

@@ -1,4 +1,5 @@
 import express, {Request, Response, json} from 'express';
+import "express-async-errors"
 import router from './routes/index-routers';
 import errorHandler from './middleware/errorhandler-middleware';
 
