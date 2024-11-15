@@ -9,9 +9,9 @@ export async function insertPhone(contactData: ContactData) {
     console.log(contactData.carrier);
     const carrierSelected = await selectCarrier(contactData.carrier);
     if (carrierSelected) {
-        await createCarrier({ 
-            ...carrierSelected, 
-            phone_id: phoneId 
+        await createCarrier({
+            ...carrierSelected,
+            phone_id: phoneId
         });
     } else {
         throw new Error(`Carrier com o id ${contactData.carrier} não encontrado.`);
@@ -56,13 +56,13 @@ async function getPhonesByCpf(cpf: string) {
     return cpfs;
 }
 
-async function getPhonesCompare(phoneNumber:string) {
+async function getPhonesCompare(phoneNumber: string) {
 
     const numbers = await db.query(`SELECT * FROM phonesNumber   where phoneNumber = $1;`, [phoneNumber])
     return numbers;
 }
 
-async function getPhonesListByCpf(document:string){
+async function getPhonesListByCpf(document: string) {
     const phones = await db.query(`SELECT phonesNumber.id, phonesNumber.phoneNumber FROM phonesNumber JOIN phones ON phonesNumber.phone_id = phones.id where phones.cpf = $1;`, [document]);
     return phones;
 }

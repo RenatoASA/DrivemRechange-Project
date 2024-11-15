@@ -27,14 +27,12 @@ export async function getSummaryListByDocument(document) {
     `, [document]);
 
 
-    // Verifica se existem resultados, caso contrário, retorna um array vazio
+
     if (result.rows.length === 0) {
         return [];
     }
 
-    // Organiza os resultados em um formato aninhado conforme solicitado
     const formattedData = result.rows.reduce((acc, row) => {
-        // Verifica se o CPF já está no acumulador
         let user = acc.find(user => user.document === row.CPF);
         if (!user) {
             user = {
@@ -44,7 +42,6 @@ export async function getSummaryListByDocument(document) {
             acc.push(user);
         }
 
-        // Verifica se o telefone já foi adicionado com base no número de telefone
         let phone = user.phones.find(phone => phone.phoneNumber === row.phoneNumber);
         if (!phone) {
             phone = {
@@ -61,7 +58,6 @@ export async function getSummaryListByDocument(document) {
             user.phones.push(phone);
         }
 
-        // Adiciona a recarga se existir
         if (row.rechargeId) {
             phone.recharges.push({
                 id: row.rechargeId,
@@ -74,55 +70,6 @@ export async function getSummaryListByDocument(document) {
 
     return formattedData;
 }
-
-//     if (result.rows.length === 0) {
-//         return [];
-//     }
-
-
-//     const formattedData = result.rows.reduce((acc, row) => {
-        
-//         let user = acc.find(user => user.document === row.CPF);
-//         if (!user) {
-//             user = {
-//                 document: row.CPF,
-//                 phones: []
-//             };
-//             acc.push(user);
-//         }
-
-
-//         let phone = user.phones.find(phone => phone.id === row.phoneId);
-//         if (!phone) {
-//             phone = {
-//                 id: row.phoneId,
-//                 phoneNumber: row.phoneNumber,
-//                 description: row.description,
-//                 carrier: {
-//                     id: row.carrierId,
-//                     name: row.carrierName,
-//                     code: row.carrierCode
-//                 },
-//                 recharges: []
-//             };
-//             user.phones.push(phone);
-//         }
-
-        
-//         if (row.rechargeId) {
-//             phone.recharges.push({
-//                 id: row.rechargeId,
-//                 amount: row.rechargeAmount
-//             });
-//         }
-
-//         return acc;
-//     }, []);
-
-//     return formattedData;
-// }
-
-
 
 const summaryRepository = {
     getSummaryListByDocument
