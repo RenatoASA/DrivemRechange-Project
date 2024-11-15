@@ -5,9 +5,9 @@
         operator: string,
         description: string,
         phoneNumber: string[],
-        carrier: Carrier,
+        carrier: number,
         recharges: RechargeData[]
-    };
+    }; 
 
     export type RechargeData = {
         id: number,

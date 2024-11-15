@@ -1,5 +1,5 @@
 import { ContactData, RechargeData } from "protocols";
-import rechargeRepository from "../repositories/recharge-repository";
+import rechargeRepository, { insertRecharge } from "../repositories/recharge-repository";
 import phoneRepository from "repositories/phone-repository";
 // import rechargeRepository, { insertPhone } from "../repositories/recharge-repository";
 
@@ -12,7 +12,7 @@ export async function getRechargeByNumberService(number:string){
 
 }
 
-export async function postRecharge({id, recharge}){
+export async function postRecharge(rechargeData:RechargeData){
     
     // const phonesInserted =contactData.phoneNumber.length;
     // const rechargesInDB = await rechargeRepository.getRechargeByNumber(rechargeData.phoneNumber_rc);
@@ -20,11 +20,11 @@ export async function postRecharge({id, recharge}){
     // const phonesInDBCount = phonesInDB.rowCount;
     // const result = phonesInserted + phonesInDBCount;
     
-    const phoneExist = await rechargeRepository.getIdCompare(id);
-    if(phoneExist.rows.length <= 0) throw { type: "NOT FOUND", message: "Numero não cadastrado no sistema!" }
+    const rechargesInDB = await rechargeRepository.getIdCompare(rechargeData.id, rechargeData.phoneNumber_rc);
     
+    if(rechargesInDB.rows.length <= 0) throw { type: "NOT FOUND", message: "Numero não cadastrado no sistema!" }
 
-    // const newPhone = await insertPhone(contactData);
+    const newRecharge = await insertRecharge(rechargeData);
 
-    return phoneExist;
+    return newRecharge;
 }

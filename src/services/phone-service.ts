@@ -3,6 +3,8 @@ import phoneRepository, { insertPhone } from "../repositories/phone-repository";
 
 
 export async function postPhone(contactData:ContactData){
+
+    console.log("service contactData"+ contactData.carrier);
     
     const phonesInserted =contactData.phoneNumber.length;
     const phonesInDB = await phoneRepository.getPhonesByCpf(contactData.cpf);
@@ -10,13 +12,14 @@ export async function postPhone(contactData:ContactData){
     const phonesInDBCount = phonesInDB.rowCount;
     const result = phonesInserted + phonesInDBCount;
     if (result > 3) throw { type: "CONFLICT", message: "Já atingiu o limite de 3 numeros por CPF!" }
+    
     for(let i=0; i<contactData.phoneNumber.length;i++){
         const phoneExist = await phoneRepository.getPhonesCompare(contactData.phoneNumber[i]);
-        console.log("PhoneNumber: "+ contactData.phoneNumber[i] +" phoneExist cont" + phoneExist.rowCount);
         if(phoneExist.rows.length > 0) throw { type: "CONFLICT", message: "Numero já cadastrado!" }
     }
+    
 
-    const newPhone = await insertPhone(contactData);
+    const newPhone = await phoneRepository.insertPhone(contactData);
 
     return newPhone;
 }

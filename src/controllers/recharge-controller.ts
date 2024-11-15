@@ -6,7 +6,7 @@ import { RechargeData } from "protocols";
 export async function createRecharge(req:Request, res:Response){
     const recharge = req.body as RechargeData;
     await postRecharge(recharge)
-    res.status(200).send("Criado com sucesso!");
+    res.status(201).send("CREATED!");
 }
 
 export async function getRechargeByNumber(req:Request, res:Response){

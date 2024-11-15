@@ -8,12 +8,14 @@ const phoneSchema =  Joi.object<ContactData> ({
     phoneNumber: Joi.array().items(Joi.number()).required(),
     operator: Joi.string().required(),
     name: Joi.string().required(),
+    carrier: Joi.number().required(),
     description: Joi.string().required()
 });
 
 const rechargeSchema =  Joi.object<RechargeData> ({
     id: Joi.number().required(),
-    recharge: Joi.number().required()
+    phoneNumber_rc: Joi.string().required(),
+    recharge: Joi.number().min(10.00).max(1000.00).required()
 });
 
 const Schema={

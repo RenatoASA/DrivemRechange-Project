@@ -1,3 +1,4 @@
+import { RechargeData } from "protocols";
 import db from "../database";
 
 
@@ -6,28 +7,37 @@ async function getRechargesListByNumber(number:string){
     return recharges;
 }
 
-async function getRechargeListById(phoneNumber:string) {
+// async function getRechargeListById(phoneNumber:string) {
 
-    const cpfs = await db.query(`SELECT * FROM phonesNumber   where phoneNumber = $1;`, [phoneNumber])
-    return cpfs;
+//     const cpfs = await db.query(`SELECT * FROM phonesNumber   where phoneNumber = $1;`, [phoneNumber])
+//     return cpfs;
+// }
+
+// async function getPhoneByNumber(number: string) {
+//     const recharges = await db.query(`select * from phonesNumber where phoneNumber = $1;`, [number])
+//     return recharges;
+// }
+
+async function getIdCompare(id:number, phoneNumber_rc: string) {
+
+    const numbers = await db.query(`SELECT * FROM phonesNumber WHERE phonenumber = $1 AND id = $2;`,[phoneNumber_rc, id]);
+    return numbers;                
+    
 }
 
-async function getPhoneByNumber(number: string) {
-    const recharges = await db.query(`select * from phonesNumber where phoneNumber = $1;`, [number])
-    return recharges;
+export async function insertRecharge(rechargeData:RechargeData){
+    const {phoneNumber_rc, recharge} = rechargeData;
+    const result = await db.query<RechargeData>(`INSERT INTO recharges ( phoneNumber_rc, recharge) 
+           VALUES ($1,$2) RETURNING *`,
+           [phoneNumber_rc, recharge]);
+           return result.rows[0];
 }
-
-async function getIdCompare(id:number) {
-
-    const numbers = await db.query(`select * from recharges join phonesNumber on recharges.phoneNumber_rc = phonesNumber.phoneNumber where phonesNumber.id = $1;`, [id])
-    return numbers;
-}
-
 
 const rechargeRepository= {
     getRechargesListByNumber,
-    getPhoneByNumber,
-    getIdCompare
+    // getPhoneByNumber,
+    getIdCompare,
+    insertRecharge
 }
 
 export default rechargeRepository;
