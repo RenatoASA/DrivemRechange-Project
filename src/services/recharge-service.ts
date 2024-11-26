@@ -14,10 +14,11 @@ export async function getRechargeByNumberService(number: string) {
 
 export async function postRecharge(rechargeData: RechargeData) {
 
-    const rechargesInDB = await rechargeRepository.getIdCompare(rechargeData.id, rechargeData.phoneNumber_rc);
+    const rechargesInDB = await rechargeRepository.getIdCompare(rechargeData.phonesnumber_id);
 
-    if (rechargesInDB.rows.length <= 0) throw { type: "NOT FOUND", message: "Numero não cadastrado no sistema!" }
-
+    if (rechargesInDB.rows.length <= 0) {
+        return [];
+    }
     const newRecharge = await insertRecharge(rechargeData);
 
     return newRecharge;

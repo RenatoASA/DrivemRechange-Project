@@ -2,7 +2,6 @@ export type ContactData = {
     id: number,
     cpf: string,
     name: string,
-    operator: string,
     description: string,
     phoneNumber: string[],
     carrier: number,
@@ -12,6 +11,7 @@ export type ContactData = {
 export type RechargeData = {
     id: number,
     phoneNumber_rc: string,
+    phonesnumber_id: number,
     recharge: number,
     balance: number
 };

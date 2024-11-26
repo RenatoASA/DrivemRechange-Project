@@ -7,24 +7,23 @@ async function getRechargesListByNumber(number: string) {
     return recharges;
 }
 
-async function getIdCompare(id: number, phoneNumber_rc: string) {
+async function getIdCompare(phonesnumber_id: number) {
 
-    const numbers = await db.query(`SELECT * FROM phonesNumber WHERE phonenumber = $1 AND id = $2;`, [phoneNumber_rc, id]);
+    const numbers = await db.query(`SELECT * FROM phonesNumber WHERE id = $1;`, [phonesnumber_id]);
     return numbers;
 
 }
 
 export async function insertRecharge(rechargeData: RechargeData) {
-    const { phoneNumber_rc, recharge } = rechargeData;
-    const result = await db.query<RechargeData>(`INSERT INTO recharges ( phoneNumber_rc, recharge) 
-           VALUES ($1,$2) RETURNING *`,
-        [phoneNumber_rc, recharge]);
+    const { phoneNumber_rc, recharge, phonesnumber_id } = rechargeData;
+    const result = await db.query<RechargeData>(`INSERT INTO recharges ( phoneNumber_rc, recharge, phonesnumber_id) 
+           VALUES ($1,$2,$3) RETURNING *`,
+        [phoneNumber_rc, recharge, phonesnumber_id]);
     return result.rows[0];
 }
 
 const rechargeRepository = {
     getRechargesListByNumber,
-    // getPhoneByNumber,
     getIdCompare,
     insertRecharge
 }

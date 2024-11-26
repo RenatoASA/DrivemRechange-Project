@@ -26,7 +26,8 @@ export async function postPhone(contactData: ContactData) {
 
 export async function getPhoneByDocumentService(document: string) {
     const phones = await phoneRepository.getPhonesListByCpf(document);
-    if (phones.rowCount < 1) throw { type: "CONFLICT CPF", message: "[]" }
+    if (phones.rowCount < 1) {
+        return [];
+    }
     return phones.rows;
-
 }

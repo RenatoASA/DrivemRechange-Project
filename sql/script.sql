@@ -49,7 +49,6 @@ CREATE TABLE IF NOT EXISTS public.phones
     id integer NOT NULL DEFAULT nextval('phones_id_seq'::regclass),
     cpf character varying(11) COLLATE pg_catalog."default" NOT NULL,
     name text COLLATE pg_catalog."default" NOT NULL,
-    operator text COLLATE pg_catalog."default" NOT NULL,
     description text COLLATE pg_catalog."default",
     carriers_id integer,
     CONSTRAINT phones_pkey PRIMARY KEY (id),
@@ -63,7 +62,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.phones
     OWNER to postgres;
-
 -------------------------------------------------------------------
 
 -- Table: public.phonesnumber
@@ -87,8 +85,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.phonesnumber
     OWNER to postgres;
-
-
 ---------------------------------------------------------------------------
 
 -- Table: public.recharges
@@ -98,7 +94,7 @@ ALTER TABLE IF EXISTS public.phonesnumber
 CREATE TABLE IF NOT EXISTS public.recharges
 (
     id integer NOT NULL DEFAULT nextval('recharges_id_seq'::regclass),
-    phonenumber_rc character varying(11) COLLATE pg_catalog."default" NOT NULL,
+    phonenumber_rc character varying(11) COLLATE pg_catalog."default",
     recharge numeric(6,2),
     balance integer,
     CONSTRAINT recharges_pkey PRIMARY KEY (id),

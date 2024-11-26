@@ -1,6 +1,6 @@
 import db from "../database";
 
-export async function getSummaryListByDocument(document) {
+export async function getSummaryListByDocument(document: string) {
 
     const result = await db.query(`
         SELECT 
@@ -13,13 +13,13 @@ export async function getSummaryListByDocument(document) {
             c.name AS "carrierName",
             c.code AS "carrierCode",
             r.id AS "rechargeId",
-            r.recharge AS "rechargeAmount"
+            r.recharge AS "recharge"
         FROM 
             phones p
         JOIN 
             phonesNumber pn ON p.id = pn.phone_id
         LEFT JOIN 
-            recharges r ON r.phonenumber_rc = pn.phonenumber
+            recharges r ON r.phonesnumber_id = pn.id
         LEFT JOIN 
             carriers c ON c.id = p.carriers_id
         WHERE 
@@ -42,7 +42,7 @@ export async function getSummaryListByDocument(document) {
             acc.push(user);
         }
 
-        let phone = user.phones.find(phone => phone.phoneNumber === row.phoneNumber);
+        let phone = user.phones.find(phone=> phone.phoneNumber === row.phoneNumber);
         if (!phone) {
             phone = {
                 id: row.phoneId,
@@ -61,7 +61,7 @@ export async function getSummaryListByDocument(document) {
         if (row.rechargeId) {
             phone.recharges.push({
                 id: row.rechargeId,
-                amount: row.rechargeAmount
+                recharge: row.recharge
             });
         }
 

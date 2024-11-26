@@ -33,12 +33,12 @@ async function selectCarrier(id: number): Promise<Carrier | null> {
 
 
 export async function createPhone(contactData: ContactData) {
-    const { cpf, operator, name, description, carrier } = contactData;
+    const { cpf, name, description, carrier } = contactData;
     const result = await db.query<ContactData>(`
-        INSERT INTO phones (cpf, name, operator, description, carriers_id)
-        VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO phones (cpf, name, description, carriers_id)
+        VALUES ($1, $2, $3, $4)
         RETURNING *
-    `, [cpf, name, operator, description, carrier]);
+    `, [cpf, name, description, carrier]);
     return result.rows[0];
 }
 
