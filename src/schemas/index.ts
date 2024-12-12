@@ -13,7 +13,7 @@ const phoneSchema = Joi.object<ContactData>({
 
 const rechargeSchema = Joi.object<RechargeData>({
     phonesnumber_id: Joi.number().required(),
-    phoneNumber_rc: Joi.string(),
+    phoneNumber_rc: Joi.string().required(),
     recharge: Joi.number().min(10.00).max(1000.00).required()
 });
 
