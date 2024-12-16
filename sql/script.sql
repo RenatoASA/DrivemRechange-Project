@@ -85,6 +85,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.phonesnumber
     OWNER to postgres;
+
 ---------------------------------------------------------------------------
 
 -- Table: public.recharges
@@ -97,9 +98,14 @@ CREATE TABLE IF NOT EXISTS public.recharges
     phonenumber_rc character varying(11) COLLATE pg_catalog."default",
     recharge numeric(6,2),
     balance integer,
+    phonesnumber_id integer,
     CONSTRAINT recharges_pkey PRIMARY KEY (id),
     CONSTRAINT fk_phonenumber_rc FOREIGN KEY (phonenumber_rc)
         REFERENCES public.phonesnumber (phonenumber) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_phonesnumber_id FOREIGN KEY (phonesnumber_id)
+        REFERENCES public.phonesnumber (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
